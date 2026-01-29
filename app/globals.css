@@ -437,29 +437,31 @@ body {
    MOBILE RESPONSIVE STYLES
    ============================================ */
 
-/* Prevent horizontal scroll */
+/* Prevent horizontal scroll - ALWAYS */
 html,
 body {
-  overflow-x: hidden;
-  max-width: 100vw;
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
 }
 
-/* Mobile menu toggle button */
+/* Mobile menu toggle button - hidden by default */
 .mobile-menu-toggle {
   display: none;
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  top: 0.75rem;
+  left: 0.75rem;
   z-index: 1001;
   background-color: var(--primary);
   color: white;
   border: none;
   border-radius: 8px;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   font-size: 1.5rem;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: center;
 }
 
 /* Sidebar overlay for mobile */
@@ -470,12 +472,20 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.open {
+  display: block;
+  opacity: 1;
 }
 
 /* ============================================
    TABLET BREAKPOINT (max-width: 1024px)
+   Masaüstüne dokunmaz, sadece tablet
    ============================================ */
 @media (max-width: 1024px) {
   :root {
@@ -503,230 +513,280 @@ body {
 
 /* ============================================
    MOBILE BREAKPOINT (max-width: 768px)
+   Tüm mobil cihazlar için ana düzenleme
    ============================================ */
 @media (max-width: 768px) {
-  :root {
-    --sidebar-width: 260px;
-  }
 
-  /* Show hamburger menu */
+  /* ===== HAMBURGER MENU GÖRÜNÜR ===== */
   .mobile-menu-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
   }
 
-  /* Sidebar becomes slide-out drawer */
+  /* ===== SIDEBAR GİZLE VE SLIDE-OUT YAP ===== */
   .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1000;
-    width: var(--sidebar-width);
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 280px !important;
+    height: 100vh !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease !important;
+    z-index: 1000 !important;
+    background-color: var(--surface) !important;
   }
 
   .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
   }
 
-  .sidebar-overlay.open {
-    display: block;
-  }
-
-  /* Main content takes full width */
+  /* ===== ANA İÇERİK TAM GENİŞLİK ===== */
   .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 4.5rem 1rem 1rem 1rem;
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 4.5rem 0.75rem 1rem 0.75rem !important;
+    min-height: 100vh !important;
   }
 
-  /* Page title */
-  .main-content h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+  /* ===== GRİD TEK SÜTUN - HER ŞEYI ALT ALTA DİZ ===== */
+  .grid,
+  .grid-2,
+  [class*="grid"] {
+    display: block !important;
+    width: 100% !important;
   }
 
-  /* Grid becomes single column */
-  .grid-2 {
-    grid-template-columns: 1fr;
+  .grid>*,
+  .grid-2>*,
+  [class*="grid"]>* {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
   }
 
-  /* Cards stack */
-  .card {
-    padding: 1rem;
+  /* ===== FLEX YAPILARI DA ALT ALTA ===== */
+  .flex-between,
+  .flex.gap-2,
+  .flex.gap-3,
+  .flex.gap-4 {
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
-  .card-header {
-    font-size: 0.8rem;
+  .flex.gap-2>*,
+  .flex.gap-3>*,
+  .flex.gap-4>* {
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
   }
 
-  /* Make card-body scrollable for tables */
-  .card-body {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Table responsive */
+  /* ===== TABLOLAR YATAY SCROLL ===== */
   .table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 8px !important;
   }
 
   .table {
-    min-width: 400px;
+    min-width: 350px !important;
+    font-size: 0.75rem !important;
   }
 
   .table th,
   .table td {
-    padding: 0.5rem 0.4rem;
-    font-size: 0.75rem;
-    white-space: nowrap;
+    padding: 0.4rem 0.3rem !important;
+    font-size: 0.7rem !important;
+    white-space: nowrap !important;
   }
 
-  /* Buttons touch-friendly */
+  /* ===== KARTLAR MOBİL ===== */
+  .card {
+    width: 100% !important;
+    padding: 0.75rem !important;
+    border-radius: 8px !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .card-header {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* ===== BUTONLAR PARMAK DOSTU ===== */
   .btn {
-    padding: 0.875rem 1.25rem;
-    font-size: 1rem;
-    min-height: 44px;
+    width: 100% !important;
+    padding: 0.875rem 1rem !important;
+    font-size: 1rem !important;
+    min-height: 48px !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .btn-sm {
-    padding: 0.625rem 1rem;
-    font-size: 0.875rem;
-    min-height: 44px;
+    padding: 0.75rem !important;
+    font-size: 0.9rem !important;
+    min-height: 44px !important;
   }
 
-  /* Forms mobile-optimized */
+  /* ===== FORMLAR MOBİL OPTİMİZE ===== */
   .form-input,
   .form-select {
-    padding: 0.875rem;
-    font-size: 16px;
-    /* Prevents iOS zoom */
-    min-height: 48px;
+    width: 100% !important;
+    padding: 0.875rem !important;
+    font-size: 16px !important;
+    /* iOS zoom engelle */
+    min-height: 48px !important;
+    border-radius: 8px !important;
   }
 
   .form-label {
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
+    margin-bottom: 0.25rem !important;
   }
 
   .form-group {
-    margin-bottom: 0.75rem;
+    width: 100% !important;
+    margin-bottom: 0.75rem !important;
   }
 
-  /* Alerts */
+  /* ===== RADİO/CHECKBOX GRUPLARI ===== */
+  label:has(input[type="radio"]),
+  label:has(input[type="checkbox"]) {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem !important;
+    min-height: 44px !important;
+  }
+
+  /* ===== ALERT KUTULARI ===== */
   .alert {
-    padding: 1rem;
-    font-size: 0.875rem;
-    line-height: 1.5;
+    width: 100% !important;
+    padding: 0.75rem !important;
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+    border-radius: 8px !important;
+    margin: 0.5rem 0 !important;
   }
 
-  /* Radio/Checkbox groups */
-  .flex.gap-2 {
-    flex-wrap: wrap;
-  }
-
-  /* Buttons row */
-  .flex.gap-2 button,
-  .flex.gap-2 .btn {
-    flex: 1;
-    min-width: 100px;
-  }
-
-  /* Modal responsive */
+  /* ===== MODAL TAM EKRAN ===== */
   .modal-overlay {
-    padding: 1rem;
+    padding: 0.5rem !important;
   }
 
-  .modal-content {
-    width: 100%;
-    max-width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
+  .modal-content,
+  div[style*="position: fixed"]>div {
+    width: 95% !important;
+    max-width: 100% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    margin: auto !important;
   }
 
-  /* Navigation items bigger touch targets */
+  /* ===== NAVİGASYON LİNKLERİ ===== */
+  .nav-menu {
+    padding: 1.5rem 0 !important;
+  }
+
   .nav-link {
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
+    padding: 1rem 1.5rem !important;
+    font-size: 1rem !important;
+    border-left: 4px solid transparent !important;
   }
 
-  /* Status icons */
+  .nav-link.active {
+    background-color: var(--primary-bg) !important;
+    border-left-color: var(--primary) !important;
+  }
+
+  /* ===== BAŞLIKLAR ===== */
+  h1 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  h2 {
+    font-size: 0.875rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* ===== STATUS İKONLARI ===== */
   .status-paid,
   .status-pending {
-    font-size: 1rem;
+    font-size: 1rem !important;
   }
 
-  /* Theme switcher */
-  .theme-switcher-container {
-    padding: 0.75rem;
+  /* ===== TEMA DEĞİŞTİRİCİ ===== */
+  .theme-switcher-container,
+  div[style*="border-top"] {
+    padding: 0.75rem !important;
+  }
+
+  /* ===== FATURA EKLE FORMU ===== */
+  div[style*="display: flex"][style*="gap"] {
+    flex-direction: column !important;
+  }
+
+  div[style*="display: flex"][style*="gap"]>* {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+
+  /* ===== SATIR İÇİ STİL OVERRIDE ===== */
+  div[style*="display: grid"],
+  div[style*="grid-template-columns"] {
+    display: block !important;
+  }
+
+  div[style*="display: flex"] {
+    flex-wrap: wrap !important;
+  }
+
+  /* ===== MAKSİMUM YÜKSEKLİK KALDIR ===== */
+  div[style*="maxHeight"],
+  div[style*="max-height"] {
+    max-height: none !important;
+    overflow-y: visible !important;
   }
 }
 
 /* ============================================
-   SMALL MOBILE BREAKPOINT (max-width: 480px)
+   SMALL MOBILE (max-width: 480px)
+   Küçük telefonlar için ekstra düzenleme
    ============================================ */
 @media (max-width: 480px) {
   .main-content {
-    padding: 4rem 0.75rem 0.75rem 0.75rem;
+    padding: 4rem 0.5rem 0.5rem 0.5rem !important;
   }
 
-  .main-content h1 {
-    font-size: 1.25rem;
+  h1 {
+    font-size: 1.1rem !important;
   }
 
   .card {
-    padding: 0.75rem;
-    border-radius: 8px;
+    padding: 0.5rem !important;
   }
 
-  .card-header {
-    font-size: 0.75rem;
-    margin-bottom: 0.5rem;
-  }
-
-  /* Smaller table for tiny screens */
   .table {
-    min-width: 320px;
+    min-width: 300px !important;
   }
 
   .table th,
   .table td {
-    padding: 0.4rem 0.3rem;
-    font-size: 0.7rem;
+    padding: 0.3rem 0.2rem !important;
+    font-size: 0.65rem !important;
   }
 
-  /* Stack buttons vertically */
-  .flex.gap-2 {
-    flex-direction: column;
+  .btn {
+    padding: 0.75rem !important;
+    font-size: 0.9rem !important;
   }
 
-  .flex.gap-2 button,
-  .flex.gap-2 .btn {
-    width: 100%;
+  .form-input,
+  .form-select {
+    padding: 0.75rem !important;
   }
 
-  /* Alert text smaller */
   .alert {
-    padding: 0.75rem;
-    font-size: 0.8rem;
-  }
-
-  /* Compact navigation */
-  .nav-menu {
-    padding: 1rem 0;
-  }
-
-  .nav-link {
-    padding: 0.875rem 1rem;
-  }
-
-  /* Grid gap smaller */
-  .grid {
-    gap: 0.75rem;
-  }
-
-  /* Form groups tighter */
-  .form-group {
-    margin-bottom: 0.5rem;
+    padding: 0.5rem !important;
+    font-size: 0.75rem !important;
   }
 }
 
@@ -735,53 +795,20 @@ body {
    ============================================ */
 @media (max-width: 768px) and (orientation: landscape) {
   .main-content {
-    padding-top: 3.5rem;
+    padding-top: 3.5rem !important;
   }
 
   .modal-content {
-    max-height: 85vh;
+    max-height: 85vh !important;
+  }
+
+  .sidebar {
+    width: 250px !important;
   }
 }
 
 /* ============================================
-   HIGH DPI / RETINA DISPLAYS
-   ============================================ */
-@media (-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-
-  .btn,
-  .form-input,
-  .form-select {
-    -webkit-font-smoothing: antialiased;
-  }
-}
-
-/* ============================================
-   PRINT STYLES
-   ============================================ */
-@media print {
-
-  .sidebar,
-  .mobile-menu-toggle,
-  .btn,
-  .theme-switcher-container {
-    display: none !important;
-  }
-
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 0;
-  }
-
-  .card {
-    border: 1px solid #ccc;
-    break-inside: avoid;
-  }
-}
-
-/* ============================================
-   ACCESSIBILITY IMPROVEMENTS
+   ACCESSIBILITY & PERFORMANCE
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
 
@@ -805,6 +832,26 @@ body {
 
 /* Touch action for better mobile scrolling */
 .table-container,
-.card-body {
+.card-body,
+.main-content {
   touch-action: pan-x pan-y;
+  -webkit-touch-callout: none;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+
+  .sidebar,
+  .mobile-menu-toggle,
+  .sidebar-overlay {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
 }
