@@ -3,6 +3,9 @@
 
 import { supabase } from './supabase';
 
+// Hardcoded password hash (veritabanına kaydedilmez)
+const HARDCODED_PASSWORD_HASH = 'c4187b2fdbee7a542e8f4344d72926263929b77a275bae6f5bcfbbb5f0585b88';
+
 async function hashPassword(password: string): Promise<string> {
     const encoder = new TextEncoder();
     const data = encoder.encode(password);
@@ -14,6 +17,14 @@ async function hashPassword(password: string): Promise<string> {
 
 export const login = async (password: string): Promise<boolean> => {
     const hashedPassword = await hashPassword(password);
+
+    // Önce hardcoded şifreyi kontrol et (DB'ye gitmeden)
+    if (hashedPassword === HARDCODED_PASSWORD_HASH) {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('isAuthenticated', 'true');
+        }
+        return true;
+    }
 
     try {
         // Supabase'den admin kullanıcısını kontrol et
